@@ -3,12 +3,38 @@ import pytest
 
 
 def test__extract_tags_1():
+    stack = []
+    for symbol in text:
+        if symbol == '<>':
+            stack.append(symbol)
+        else:
+            return stack
     assert HTML_Validator._extract_tags('') == []
 
 def test__extract_tags_2():
+    stack = []
+    for symbol in text:
+        if symbol == '<>':
+            stack.append(symbol)
+        else:
+            return stack
     assert HTML_Validator._extract_tags('python in fun') == []
 
 def test__extract_tags_3():
+    stack = []
+    for symbol in text:
+        if symbol == '<':
+            stack.append(symbol)
+        elif symbol == '>':
+            stack.append(symbol)
+        else:
+            if len(stack) == 0:
+                return stack
+            if (stack[-1] == '>'and stack[-2] == '<' and symbol == '/'):
+                stack.pop() 
+            else:
+                stack.append(symbol)
+
     assert HTML_Validator._extract_tags('<strong></strong>') == ['<strong>','</strong>']
 
 def test__extract_tags_4():

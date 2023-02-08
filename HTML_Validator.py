@@ -15,23 +15,28 @@ def validate_html(html):
     index = 0
     stack = []
     balanced = True
-    if len(tagged) == 0:
-        return False
     if len(html) == 0:
         return True
+    if not tagged:
+        return False
     while index < len(tagged) and balanced:
         tag = tagged[index]
-        tagname = tag[1:-1]
-        if '/' not in html:
-            stack.append()
+        if '/' not in tag:
+            stack.append(tag)
         else:
             if len(stack) == 0:
-                return False
+                balanced = False
+            elif ('/' not in stack[-1] and '/' in tag and
+                    len(tag) == len(stack[-1]) + 1):
+                stack.pop()
             else:
-                lasttag = stack.pop()
-                if lasttag != tagname[1:-1]:
-                    balanced = False
+                balanced = False
         index += 1
+
+    if balanced and len(stack) == 0:
+        return True
+    else:
+        return False
 
 
 def _extract_tags(html):

@@ -26,9 +26,9 @@ def validate_html(html):
         else:
             if len(stack) == 0:
                 balanced = False
-            elif ('/' not in stack[-1] and
-                    '/' in tag and
-                    len(tag) == len(stack[-1]) + 1):
+            elif ('/' not in stack[-1]
+                    and '/' in tag
+                    and len(tag) == len(stack[-1]) + 1):
                 stack.pop()
             else:
                 balanced = False
